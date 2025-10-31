@@ -3,10 +3,13 @@ from fastapi.responses import HTMLResponse
 from fastapi.templating import Jinja2Templates
 import feedparser
 from datetime import datetime, date
-from scraper import get_articles
+from fastapi_scraper.scraper import get_articles  
+from pathlib import Path
+import uvicorn
 
 app = FastAPI()
-templates = Jinja2Templates(directory="templates")
+BASE_DIR = Path(__file__).resolve().parent
+templates = Jinja2Templates(directory=BASE_DIR / "templates")
 
 cached_articles = []
 cache_date = None
@@ -93,6 +96,9 @@ def get_articles(query: str):
 # -------- Ruta principal -------- #
 @app.get("/", response_class=HTMLResponse)
 async def home(request: Request, query: str = None):
-    search_term = query if query else DEFAULT_QUERY
-    articles = get_articles(search_term)
-    return templates.TemplateResponse("index.html", {"request": request, "articles": articles, "query": search_term})
+    search_query = query or DEFAULT_QUERY
+    articles = get_articles(search_query) 
+    return templates.TemplateResponse ("index.html", {"request": request, "articles": articles, "query": search_query})
+
+if __name__ == "__main__":
+    uvicorn.run("main:app", host="127.0.0.1", port=8000, reload=True)

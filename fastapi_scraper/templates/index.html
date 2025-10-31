@@ -1,182 +1,40 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>FastAPI Web Scraper</title>
-  <style>
-    body {
-      font-family: 'Segoe UI', Roboto, Arial, sans-serif;
-      margin: 0;
-      background: linear-gradient(to bottom right, #e0f2fe, #d1fae5);
-      color: #1e293b;
-      min-height: 100vh;
-      display: flex;
-      flex-direction: column;
-    }
-
-    header {
-      background: linear-gradient(135deg, #1e40af, #0ea5e9);
-      color: white;
-      text-align: center;
-      padding: 30px 0;
-      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
-    }
-
-    header h1 {
-      font-size: 2rem;
-      letter-spacing: 1px;
-      margin: 0;
-    }
-
-    main {
-      flex: 1;
-      padding: 40px 20px;
-      max-width: 900px;
-      margin: auto;
-    }
-
-    form {
-      margin-bottom: 30px;
-      display: flex;
-      gap: 10px;
-      justify-content: center;
-      flex-wrap: wrap;
-    }
-
-    input[type=text] {
-      padding: 10px;
-      border-radius: 8px;
-      border: 1px solid #93c5fd;
-      width: 300px;
-      outline: none;
-      transition: 0.3s;
-    }
-
-    input[type=text]:focus {
-      border-color: #3b82f6;
-      box-shadow: 0 0 6px rgba(59, 130, 246, 0.4);
-    }
-
-    button {
-      padding: 10px 16px;
-      border: none;
-      background: linear-gradient(135deg, #3b82f6, #10b981);
-      color: white;
-      font-weight: bold;
-      border-radius: 8px;
-      cursor: pointer;
-      transition: 0.3s;
-    }
-
-    button:hover {
-      opacity: 0.9;
-      transform: scale(1.03);
-    }
-
-    .query-info {
-      text-align: center;
-      margin-bottom: 20px;
-      color: #475569;
-    }
-
-    ul {
-      list-style: none;
-      padding: 0;
-    }
-
-    li {
-      background: white;
-      margin-bottom: 20px;
-      padding: 20px;
-      border-radius: 10px;
-      box-shadow: 0 4px 8px rgba(0,0,0,0.08);
-      transition: 0.3s;
-    }
-
-    li:hover {
-      transform: translateY(-3px);
-      box-shadow: 0 6px 12px rgba(0,0,0,0.1);
-    }
-
-    a.title {
-      text-decoration: none;
-      color: #2563eb;
-      font-size: 1.2em;
-      font-weight: bold;
-    }
-
-    a.title:hover {
-      color: #22d3ee;
-    }
-
-    small {
-      display: block;
-      color: #64748b;
-      margin-top: 5px;
-    }
-
-    footer {
-      background: #0f172a;
-      color: #94a3b8;
-      text-align: center;
-      padding: 20px;
-      font-size: 0.9rem;
-      box-shadow: 0 -2px 6px rgba(0, 0, 0, 0.1);
-    }
-
-    @media (prefers-color-scheme: dark) {
-      body {
-        background: linear-gradient(to bottom right, #0f172a, #1e293b);
-        color: #e2e8f0;
-      }
-      li {
-        background: #1e293b;
-      }
-      a.title {
-        color: #38bdf8;
-      }
-      footer {
-        background: #1e293b;
-        color: #94a3b8;
-      }
-    }
-  </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>FastAPI Web Scraper</title>
+<style>
+/* Copia el CSS moderno que creamos antes */
+</style>
 </head>
-
 <body>
-  <header>
-    <h1>🌐 FastAPI Web Scraper</h1>
-  </header>
+<header>
+<h1>🌐 FastAPI Web Scraper</h1>
+</header>
 
-  <main>
-    <form method="get" action="/">
-      <input type="text" name="query" placeholder="Buscar artículos..." value="{{ query }}">
-      <button type="submit">Buscar</button>
-    </form>
+<main>
+<form method="get" action="/">
+  <input type="text" name="query" placeholder="Buscar artículos...">
+  <button type="submit">Buscar</button>
+</form>
 
-    {% if query %}
-      <div class="query-info">
-        Mostrando resultados para: <strong>{{ query }}</strong>
-      </div>
-    {% endif %}
+{% if articles %}
+<ul>
+  {% for article in articles %}
+  <li>
+    <a href="{{ article.link }}" target="_blank">{{ article.title }}</a>
+    <small>{{ article.source }}</small>
+  </li>
+  {% endfor %}
+</ul>
+{% else %}
+<p style="text-align:center; color:#64748b;">No se encontraron resultados. Prueba otra búsqueda.</p>
+{% endif %}
+</main>
 
-    {% if articles %}
-      <ul>
-        {% for article in articles %}
-          <li>
-            <a class="title" href="{{ article.link }}" target="_blank">{{ article.title }}</a>
-            <small>Fuente: {{ article.source }}</small>
-          </li>
-        {% endfor %}
-      </ul>
-    {% else %}
-      <p style="text-align:center; color:#64748b;">No se encontraron resultados. Prueba otra búsqueda.</p>
-    {% endif %}
-  </main>
-
-  <footer>
-    Hecho con 💙 por Miguel Pastor
-  </footer>
+<footer>
+Hecho con 💙 por Miguel Pastor
+</footer>
 </body>
 </html>

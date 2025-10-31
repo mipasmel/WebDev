@@ -3,7 +3,7 @@ from fastapi.responses import HTMLResponse
 from fastapi.templating import Jinja2Templates
 import feedparser
 from datetime import datetime, date
-from fastapi_scraper.scraper import get_articles  
+from scraper import get_articles 
 from pathlib import Path
 import uvicorn
 

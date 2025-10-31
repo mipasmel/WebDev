@@ -1,9 +1,16 @@
 {
   "version": 2,
   "builds": [
-    { "src": "fastapi_scraper/main.py", "use": "@vercel/python" }
+    {
+      "src": "fastapi_scraper/main.py",
+      "use": "@vercel/python",
+      "config": { "maxLambdaSize": "15mb" }
+    }
   ],
   "routes": [
-    { "src": "/(.*)", "dest": "fastapi_scraper/main.py" }
+    {
+      "src": "/(.*)",
+      "dest": "fastapi_scraper/main.py"
+    }
   ]
 }
